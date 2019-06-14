@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 16:03:23 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/14 16:04:28 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/14 16:20:44 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct		s_process
 int					is_power_two(int nb);
 int					big_endian(char *length);
 void				png_to_bmp(char *png);
+void				check_signature(char *buffer);
 void				header(char *buffer, t_control *file);
 void				clean(char *buffer, char *error, int code);
 void				setup(t_control *file, t_process *handler);

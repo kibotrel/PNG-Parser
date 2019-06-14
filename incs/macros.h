@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 16:03:44 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/14 16:05:19 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/14 16:28:46 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	Useful macros
 */
 
-# define MAX_SIZE	8388608
+# define MAX_SIZE	33554432
 
 /*
 **	Error codes

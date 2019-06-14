@@ -5,18 +5,20 @@ NAME		= png-to-bmp
 # All the directories needed to know where files should be (Can be changed)
 
 OBJDIR		= objs/
+OBJSUBDIRS	= core setup utils chunks
 SRCDIR		= srcs/
 LFTDIR		= ./libft/
 INCDIR		= ./incs/ ./libft/incs/
 
 # Source files (Can be changed)
 
-SRC			= main.c		\
-			  setup.c		\
-			  chunks.c		\
-			  png_to_bmp.c	\
-			  clean.c		\
-			  maths.c
+SRC			= main.c				\
+			  setup/setup.c			\
+			  chunks/header.c		\
+			  chunks/signature.c	\
+			  core/png_to_bmp.c		\
+			  utils/clean.c			\
+			  utils/maths.c
 
 LFT			= ./libft/libft.a
 
@@ -24,6 +26,7 @@ LFT			= ./libft/libft.a
 
 CSRC		= $(addprefix $(SRCDIR), $(SRC))
 COBJ		= $(addprefix $(OBJDIR), $(OBJ))
+SUBDIRS		= $(foreach dir, $(OBJSUBDIRS), $(OBJDIR)$(dir))
 INCLUDES	= $(foreach include, $(INCDIR), -I$(include))
 
 # How files should be compiled with set flags (Can be changed)
@@ -41,7 +44,7 @@ YELLOW		= \033[33m
 
 # Check if object directory exists, build libft and then the Project
 
-all:  $(NAME)
+all: $(SUBDIRS) $(NAME)
 
 $(NAME): $(LFT) $(OBJDIR) $(COBJ)
 	@echo "$(YELLOW)\n      - Building $(RESET)$(NAME) $(YELLOW)...\n$(RESET)"
@@ -50,6 +53,9 @@ $(NAME): $(LFT) $(OBJDIR) $(COBJ)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
+
+$(SUBDIRS):
+	@mkdir -p $(SUBDIRS)
 
 # Redefinition of implicit compilation rule to prompt some colors and file names during the said compilation
 
@@ -66,14 +72,14 @@ $(LFT):
 
 clean:
 	@echo "$(GREEN)***   Deleting all object from $(NAME)   ...   ***\n$(RESET)"
-	@rm -f $(COBJ)
+	@$(RM) $(COBJ)
 
 # Deleting the executable after cleaning up all .o files
 
 fclean: clean
 	@make -sC $(LFTDIR) fclean
 	@echo "$(GREEN)***   Deleting executable file from $(NAME)   ...   ***\n$(RESET)"
-	@rm -f $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 

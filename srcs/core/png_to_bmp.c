@@ -33,6 +33,7 @@ static void	read_png(char *buffer, t_control file)
 				handler[i].process(buffer + file.info.position + 8, &file);
 				break;
 			}
+		printf("%s\n", file.chunk.name);
 		file.info.position += file.chunk.size + 12;
 	}
 	free(buffer);
