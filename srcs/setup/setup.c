@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   setup.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/14 16:09:02 by kibotrel          #+#    #+#             */
+/*   Updated: 2019/06/14 16:10:51 by kibotrel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include "png.h"
 
-void	fill_chunkname(char *chunk, char *buffer, int size)
+void		fill_chunkname(char *chunk, char *buffer, int size)
 {
-	int				i;
+	int	i;
 
 	i = -1;
 	while (++i < size)

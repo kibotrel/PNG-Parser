@@ -1,18 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   png_to_bmp.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/14 16:16:17 by kibotrel          #+#    #+#             */
+/*   Updated: 2019/06/14 16:25:10 by kibotrel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "libft.h"
+#include "macros.h"
 #include "png.h"
-
-static void	check_sign(char *buffer)
-{
-	int				i;
-	unsigned char	sign[8] = {0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A};
-
-	i = -1;
-	while (++i < 8)
-		if ((unsigned char)buffer[i] != sign[i])
-			clean(buffer, ERR_SIGN, 2);
-}
 
 static void	read_png(char *buffer, t_control file)
 {
@@ -20,7 +22,7 @@ static void	read_png(char *buffer, t_control file)
 	t_process		handler[2] = {{NULL, NULL}};
 
 	setup(&file, handler);
-	check_sign(buffer);
+	check_signature(buffer);
 	while (file.info.position < file.size)
 	{
 		i = -1;
