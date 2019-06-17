@@ -23,12 +23,24 @@ void		fill_chunkname(char *chunk, char *buffer, int size)
 	chunk[i] = '\0';
 }
 
-static void	fill_handler(t_process *handler)
+static void	fill_type(t_process *handler)
 {
 	handler[0].type = "IHDR";
+	handler[1].type = "IEND";
+	handler[2].type = NULL;
+}
+
+static void	fill_process(t_process *handler)
+{
 	handler[0].process = header;
-	handler[1].type = NULL;
-	handler[1].process = NULL;
+	handler[1].process = end;
+	handler[2].process = NULL;
+}
+
+static void	fill_handler(t_process *handler)
+{
+	fill_type(handler);
+	fill_process(handler);
 }
 
 void		setup(t_control *file, t_process *handler)

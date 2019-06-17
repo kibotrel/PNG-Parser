@@ -15,6 +15,7 @@ INCDIR		= ./incs/ ./libft/incs/
 SRC			= main.c				\
 			  setup/setup.c			\
 			  chunks/header.c		\
+			  chunks/end.c			\
 			  chunks/signature.c	\
 			  core/png_to_bmp.c		\
 			  utils/clean.c			\
