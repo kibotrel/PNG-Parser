@@ -17,8 +17,8 @@
 static void	fill_infos(t_infos *info, char *buffer)
 {
 	info->chunk++;
-	info->width = big_endian(buffer);
-	info->height = big_endian(buffer + 4);
+	info->width = big_endian4(buffer);
+	info->height = big_endian4(buffer + 4);
 	info->depth = (unsigned char)buffer[8];
 	info->color = (unsigned char)buffer[9];
 	info->compression = (unsigned char)buffer[10];
@@ -45,8 +45,15 @@ void		header(char *buffer, t_control *file)
 		clean(buffer, ERR_COLOR, 8);
 	if (!check_presets(file->info.depth, file->info.color))
 		clean(buffer, ERR_PRESET, 9);
-	printf("\nChunk name         : %s\nPNG size           : %dx%dp\n", file->chunk.name, file->info.width, file->info.height);
-	printf("Bit depth          : %d\nColor type         : %d\n", file->info.depth, file->info.color);
-	printf("Compression method : %d\nFilter method      : %d\n", file->info.compression, file->info.filter);
-	printf("Interlace method   : %d\n\n", file->info.interlace);
+	if (file->verbose)
+	{
+		printf("\nChunk name         : %s\n", file->chunk.name);
+		printf("\nChunk size         : %d\n", file->chunk.size);
+		printf("PNG size           : %dx%dp\n", file->info.width, file->info.height);
+		printf("Bit depth          : %d\n", file->info.depth);
+		printf("Color type         : %d\n", file->info.color);
+		printf("Compression method : %d\n", file->info.compression);
+		printf("Filter method      : %d\n", file->info.filter);
+		printf("Interlace method   : %d\n", file->info.interlace);
+	}
 }
