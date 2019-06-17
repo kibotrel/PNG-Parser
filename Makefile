@@ -17,6 +17,7 @@ SRC			= main.c				\
 			  chunks/header.c		\
 			  chunks/end.c			\
 			  chunks/signature.c	\
+			  chunks/time.c			\
 			  core/png_to_bmp.c		\
 			  utils/clean.c			\
 			  utils/maths.c
