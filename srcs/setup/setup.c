@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "libft.h"
 #include "png.h"
 
 void		fill_chunkname(char *chunk, char *buffer, int size)
@@ -25,16 +26,24 @@ void		fill_chunkname(char *chunk, char *buffer, int size)
 
 static void	fill_type(t_process *handler)
 {
-	handler[0].type = "IHDR";
-	handler[1].type = "IEND";
-	handler[2].type = NULL;
+	int	i;
+
+	i = -1;
+	handler[++i].type = "IHDR";
+	handler[++i].type = "tIME";
+	handler[++i].type = "IEND";
+	handler[++i].type = NULL;
 }
 
 static void	fill_process(t_process *handler)
 {
-	handler[0].process = header;
-	handler[1].process = end;
-	handler[2].process = NULL;
+	int	i;
+
+	i = -1;
+	handler[++i].process = header;
+	handler[++i].process = time;
+	handler[++i].process = end;
+	handler[++i].process = NULL;
 }
 
 static void	fill_handler(t_process *handler)
@@ -45,7 +54,7 @@ static void	fill_handler(t_process *handler)
 
 void		setup(t_control *file, t_process *handler)
 {
+	ft_bzero(&file->info, sizeof(t_infos));
 	fill_handler(handler);
 	file->info.position = 8;
-	file->info.chunk = 0;
 }

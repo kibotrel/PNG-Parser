@@ -16,46 +16,45 @@
 #include "macros.h"
 #include "png.h"
 
-static void	read_png(char *buffer, t_control file)
+static void	read_png(t_control *file, char *save)
 {
 	int				i;
 	t_process		handler[NB_CHUNKS + 1] = {{NULL, NULL}};
 
-	setup(&file, handler);
-	check_signature(buffer);
-	while (file.info.position < file.size)
+	setup(file, handler);
+	check_signature(save);
+	while (file->info.position < file->size)
 	{
 		i = -1;
-		ft_memcpy(file.chunk.length, buffer + file.info.position, 4);
-		file.chunk.size = big_endian4(file.chunk.length);
-		fill_chunkname(file.chunk.name, buffer + file.info.position + 4, 4);
+		ft_memcpy(file->chunk.length, save + file->info.position, 4);
+		file->chunk.size = big_endian4(file->chunk.length);
+		fill_chunkname(file->chunk.name, save + file->info.position + 4, 4);
 		while (handler[++i].type)
-			if (!ft_strcmp(handler[i].type, file.chunk.name))
+			if (!ft_strcmp(handler[i].type, file->chunk.name))
 			{
-				handler[i].process(buffer + file.info.position + 8, &file);
+				handler[i].process(file);
 				break;
 			}
-		!file.verbose ? printf("%s\n", file.chunk.name) : 0;
-		file.info.position += file.chunk.size + 12;
+		!file->verbose ? printf("%s\n", file->chunk.name) : 0;
+		file->info.position += file->chunk.size + 12;
 	}
-	free(buffer);
+	free(file->save);
 }
 
 void		png_to_bmp(char *png, char *flag)
 {
 	FILE			*tmp;
-	char			*buffer;
 	t_control		file;
 
-	if (!(buffer = (char*)malloc(MAX_SIZE)))
+	if (!(file.save = (char*)malloc(MAX_SIZE)))
 		ft_print_error(ERR_MALLOC, 1);
 	if (!(tmp = fopen(png, "r")))
-		clean(buffer, ERR_OPEN, 2);
-	file.size = fread(buffer, sizeof(char), MAX_SIZE, tmp);
+		clean(file.save, ERR_OPEN, 2);
+	file.size = fread(file.save, sizeof(char), MAX_SIZE, tmp);
 	if (flag)
 		file.verbose = (!ft_strcmp(flag, "-v") ? 1 : 0);
 	if (file.size <= MAX_SIZE && feof(tmp) && !ferror(tmp) && !fclose(tmp))
-		read_png(buffer, file);
+		read_png(&file, file.save);
 	else
-		clean(buffer, ERR_FILE, 6);
+		clean(file.save, ERR_FILE, 6);
 }

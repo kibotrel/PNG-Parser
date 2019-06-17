@@ -14,16 +14,19 @@
 #include "macros.h"
 #include "png.h"
 
-static void	fill_infos(t_infos *info, char *buffer)
+static void	fill_infos(t_infos *info, unsigned char *buffer, int offset)
 {
+	int	i;
+
+	i = offset + 16;
 	info->chunk++;
-	info->width = big_endian4(buffer);
-	info->height = big_endian4(buffer + 4);
-	info->depth = (unsigned char)buffer[8];
-	info->color = (unsigned char)buffer[9];
-	info->compression = (unsigned char)buffer[10];
-	info->filter = (unsigned char)buffer[11];
-	info->interlace = (unsigned char)buffer[12];
+	info->width = big_endian4(buffer + i - 8);
+	info->height = big_endian4(buffer + i - 4);
+	info->depth = buffer[i++];
+	info->color = buffer[i++];
+	info->compression = buffer[i++];
+	info->filter = buffer[i++];
+	info->interlace = buffer[i++];
 }
 
 static int	check_presets(unsigned char depth, unsigned char clr)
@@ -32,19 +35,19 @@ static int	check_presets(unsigned char depth, unsigned char clr)
 			|| ((clr == 2 || clr == 4 || clr == 6) && depth < 8)) ? 0 : 1);
 }
 
-void		header(char *buffer, t_control *file)
+void		header(t_control *file)
 {
 	if (file->chunk.size != 13 || file->info.chunk)
-		clean(buffer, ERR_HEADER, 4);
-	fill_infos(&file->info, buffer);
+		clean(file->save, ERR_HEADER, 4);
+	fill_infos(&file->info, (unsigned char*)file->save, file->info.position);
 	if (!file->info.width || !file->info.height)
-		clean(buffer, ERR_SIZE, 5);
+		clean(file->save, ERR_SIZE, 5);
 	if (file->info.depth > 16 || !is_power_two(file->info.depth))
-		clean(buffer, ERR_DEPTH, 7);
+		clean(file->save, ERR_DEPTH, 7);
 	if (file->info.color > 6 || file->info.color == 1 || file->info.color == 5)
-		clean(buffer, ERR_COLOR, 8);
+		clean(file->save, ERR_COLOR, 8);
 	if (!check_presets(file->info.depth, file->info.color))
-		clean(buffer, ERR_PRESET, 9);
+		clean(file->save, ERR_PRESET, 9);
 	if (file->verbose)
 	{
 		printf("\nChunk name         : %s\n", file->chunk.name);

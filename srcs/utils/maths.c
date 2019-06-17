@@ -10,18 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int		big_endian4(char *length)
+int		big_endian4(unsigned char *nb)
 {
-	return (((unsigned char)length[0] << 24)
-		| ((unsigned char)length[1] << 16)
-		| ((unsigned char)length[2] << 8)
-		| ((unsigned char)length[3]));
+	return ((nb[0] << 24) | (nb[1] << 16) | (nb[2] << 8) | (nb[3]));
 }
 
-int		big_endian2(char *length)
+int		big_endian2(unsigned char *nb)
 {
-	return (((unsigned char)length[0] << 8)
-		| ((unsigned char)length[1]));
+	return ((nb[0] << 8) | (nb[1]));
 }
 
 int		is_power_two(int nb)
