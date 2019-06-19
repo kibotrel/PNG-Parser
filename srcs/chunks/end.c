@@ -4,10 +4,7 @@
 
 static void	verbose(t_control file)
 {
-	ft_putstr("\n\nChunk name       : ");
-	ft_putstr(file.chunk.name);
-	ft_putstr("\n\nChunk size       : ");
-	ft_putnbr(file.chunk.size);
+	chunk_infos(file.chunk.name, file.chunk.size);
 }
 
 int			end(t_control *file)

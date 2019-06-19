@@ -18,10 +18,7 @@ static void	fill_infos(t_infos *info, unsigned char *buffer, int offset)
 
 static void	verbose(t_control file)
 {
-	ft_putstr("\n\nChunk name       : ");
-	ft_putstr(file.chunk.name);
-	ft_putstr("\n\nChunk size       : ");
-	ft_putnbr(file.chunk.size);
+	chunk_infos(file.chunk.name, file.chunk.size);
 	ft_putstr("\nYear             : ");
 	ft_putnbr(file.info.year);
 	ft_putstr("\nMonth            : ");
@@ -42,7 +39,7 @@ int			time(t_control *file)
 		return (ERR_TIME);
 	if (file->info.iend || file->info.time)
 		return (ERR_FORMAT);
-	fill_infos(&file->info, (unsigned char*)file->save, file->info.position);
+	fill_infos(&file->info, (unsigned char*)file->save, file->info.pos);
 	file->info.time = 1;
 	if (file->verbose)
 		verbose(*file);

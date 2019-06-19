@@ -5,7 +5,7 @@
 int	main(int ac, char **av)
 {
 	int	flag;
-
+	
 	if (ac > 1)
 	{
 		if (av[2])

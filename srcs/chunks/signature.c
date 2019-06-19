@@ -13,7 +13,7 @@
 #include "macros.h"
 #include "png.h"
 
-int	check_signature(char *buffer)
+int	check_signature(unsigned char *buffer)
 {
 	int				i;
 	unsigned char	sign[8] = {0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A};

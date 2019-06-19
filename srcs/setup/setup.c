@@ -14,13 +14,13 @@
 #include "libft.h"
 #include "png.h"
 
-void		fill_chunkname(char *chunk, char *buffer, int size)
+void		fill_chunkname(unsigned char *chunk, unsigned char *save, int size)
 {
 	int	i;
 
 	i = -1;
 	while (++i < size)
-		chunk[i] = buffer[i];
+		chunk[i] = save[i];
 	chunk[i] = '\0';
 }
 
@@ -58,5 +58,5 @@ void		setup(t_control *file, t_process *handler)
 {
 	ft_bzero(&file->info, sizeof(t_infos));
 	fill_handler(handler);
-	file->info.position = 8;
+	file->info.pos = 8;
 }
