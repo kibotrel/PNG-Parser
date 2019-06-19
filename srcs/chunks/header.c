@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 #include "macros.h"
 #include "png.h"
 
@@ -35,28 +35,48 @@ static int	check_presets(unsigned char depth, unsigned char clr)
 			|| ((clr == 2 || clr == 4 || clr == 6) && depth < 8)) ? 0 : 1);
 }
 
-void		header(t_control *file)
+static void	verbose(t_control file)
 {
-	if (file->chunk.size != 13 || file->info.chunk)
-		clean(file->save, ERR_HEADER, 4);
+	ft_putstr("\nChunk name       : ");
+	ft_putstr(file.chunk.name);
+	ft_putstr("\n\nChunk size       : ");
+	ft_putnbr(file.chunk.size);
+	ft_putstr("\nPNG size         : ");
+	ft_putnbr(file.info.width);
+	ft_putchar('x');
+	ft_putnbr(file.info.height);
+	ft_putstr("\nBit depth        : ");
+	ft_putnbr(file.info.depth);
+	ft_putstr("\nColor type       : ");
+	ft_putnbr(file.info.color);
+	ft_putstr("\nCompression type : ");
+	ft_putnbr(file.info.compression);
+	ft_putstr("\nFilter type      : ");
+	ft_putnbr(file.info.filter);
+	ft_putstr("\nInterlace type   : ");
+	ft_putnbr(file.info.interlace);
+}
+
+int			header(t_control *file)
+{
+	if (file->chunk.size != 13)
+		return (ERR_IHDR);
+	if (file->info.chunk)
+		return (ERR_FORMAT);
 	fill_infos(&file->info, (unsigned char*)file->save, file->info.position);
-	if (!file->info.width || !file->info.height)
-		clean(file->save, ERR_SIZE, 5);
-	if (file->info.depth > 16 || !is_power_two(file->info.depth))
-		clean(file->save, ERR_DEPTH, 7);
-	if (file->info.color > 6 || file->info.color == 1 || file->info.color == 5)
-		clean(file->save, ERR_COLOR, 8);
-	if (!check_presets(file->info.depth, file->info.color))
-		clean(file->save, ERR_PRESET, 9);
 	if (file->verbose)
-	{
-		printf("\nChunk name         : %s\n", file->chunk.name);
-		printf("\nChunk size         : %d\n", file->chunk.size);
-		printf("PNG size           : %dx%dp\n", file->info.width, file->info.height);
-		printf("Bit depth          : %d\n", file->info.depth);
-		printf("Color type         : %d\n", file->info.color);
-		printf("Compression method : %d\n", file->info.compression);
-		printf("Filter method      : %d\n", file->info.filter);
-		printf("Interlace method   : %d\n", file->info.interlace);
-	}
+		verbose(*file);
+	if (!file->info.width || !file->info.height)
+		return (ERR_SIZE);
+	if (file->info.depth > 16 || !is_power_two(file->info.depth))
+		return (ERR_DEPTH);
+	if (file->info.color > 6 || file->info.color == 1 || file->info.color == 5)
+		return (ERR_COLOR);
+	if (!check_presets(file->info.depth, file->info.color))
+		return (ERR_PRESET);
+	if (file->info.depth != 8
+		|| (file->info.color != 2 && file->info.color != 6)
+		|| file->info.compression || file->info.filter || file->info.interlace)
+		return (ERR_HANDLED);
+	return (SUCCESS);
 }

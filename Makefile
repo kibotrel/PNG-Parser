@@ -18,9 +18,10 @@ SRC			= main.c				\
 			  chunks/end.c			\
 			  chunks/signature.c	\
 			  chunks/time.c			\
-			  core/png_to_bmp.c		\
-			  utils/clean.c			\
-			  utils/maths.c
+			  chunks/image.c		\
+			  core/png_to_array.c	\
+			  utils/maths.c			\
+			  utils/errors.c
 
 LFT			= ./libft/libft.a
 

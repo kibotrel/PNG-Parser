@@ -31,6 +31,7 @@ static void	fill_type(t_process *handler)
 	i = -1;
 	handler[++i].type = "IHDR";
 	handler[++i].type = "tIME";
+	handler[++i].type = "IDAT";
 	handler[++i].type = "IEND";
 	handler[++i].type = NULL;
 }
@@ -42,6 +43,7 @@ static void	fill_process(t_process *handler)
 	i = -1;
 	handler[++i].process = header;
 	handler[++i].process = time;
+	handler[++i].process = image;
 	handler[++i].process = end;
 	handler[++i].process = NULL;
 }
