@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "libft.h"
 #include "macros.h"
 #include "png.h"
 
@@ -16,27 +16,39 @@ static void	fill_infos(t_infos *info, unsigned char *buffer, int offset)
 	info->secs = buffer[i++];
 }
 
-void		time(t_control *file)
+static void	verbose(t_control file)
+{
+	ft_putstr("\n\nChunk name       : ");
+	ft_putstr(file.chunk.name);
+	ft_putstr("\n\nChunk size       : ");
+	ft_putnbr(file.chunk.size);
+	ft_putstr("\nYear             : ");
+	ft_putnbr(file.info.year);
+	ft_putstr("\nMonth            : ");
+	ft_putnbr(file.info.month);
+	ft_putstr("\nDay              : ");
+	ft_putnbr(file.info.day);
+	ft_putstr("\nHours            : ");
+	ft_putnbr(file.info.hours);
+	ft_putstr("\nMinutes          : ");
+	ft_putnbr(file.info.mins);
+	ft_putstr("\nSeconds          : ");
+	ft_putnbr(file.info.secs);
+}
+
+int			time(t_control *file)
 {
 	if (file->chunk.size != 7 || !file->info.chunk)
-		clean(file->save, ERR_TIME, 12);
+		return (ERR_TIME);
 	if (file->info.iend || file->info.time)
-		clean(file->save, ERR_FORMAT, 11);
+		return (ERR_FORMAT);
 	fill_infos(&file->info, (unsigned char*)file->save, file->info.position);
 	file->info.time = 1;
+	if (file->verbose)
+		verbose(*file);
 	if (file->info.hours > 23 || file->info.mins > 59 || file->info.secs > 60
 		|| !file->info.day || file->info.day > 31
 		|| !file->info.month || file->info.month > 12)
-		clean(file->save, ERR_DATE, 13);
-	if (file->verbose)
-	{
-		printf("\nChunk name         : %s\n", file->chunk.name);
-		printf("\nChunk size         : %d\n", file->chunk.size);
-		printf("Year               : %d\n", file->info.year);
-		printf("Month              : %d\n", file->info.month);
-		printf("Day                : %d\n", file->info.day);
-		printf("Hours              : %d\n", file->info.hours);
-		printf("Minutes            : %d\n", file->info.mins);
-		printf("Seconds            : %d\n", file->info.secs);
-	}
+		return (ERR_DATE);
+	return (SUCCESS);
 }

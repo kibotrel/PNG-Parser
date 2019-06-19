@@ -45,13 +45,14 @@ typedef struct		s_infos
 typedef struct		s_control
 {
 	int				size;
+	int				debug;
 	int				verbose;
 	char			*save;
 	t_infos			info;
 	t_chunk			chunk;
 }					t_control;
 
-typedef void		(*handler)(t_control *file);
+typedef int		(*handler)(t_control *file);
 
 typedef struct		s_process
 {
@@ -60,14 +61,15 @@ typedef struct		s_process
 }					t_process;
 
 int					is_power_two(int nb);
+int					end(t_control *file);
+int					time(t_control *file);
+int					image(t_control *file);
+int					header(t_control *file);
+int					process_state(t_control file, int code);
+int					check_signature(char *buffer);
 int					big_endian4(unsigned char *nb);
 int					big_endian2(unsigned char *nb);
-void				png_to_bmp(char *png, char *flag);
-void				check_signature(char *buffer);
-void				end(t_control *file);
-void				time(t_control *file);
-void				header(t_control *file);
-void				clean(char *buffer, char *error, int code);
+int					png_to_array(char *png, int flag);
 void				setup(t_control *file, t_process *handler);
 void				fill_chunkname(char *chunk, char *buffer, int size);
 

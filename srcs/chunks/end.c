@@ -1,17 +1,23 @@
-#include "stdio.h"
+#include "libft.h"
 #include "macros.h"
 #include "png.h"
 
-void	end(t_control *file)
+static void	verbose(t_control file)
 {
-	if (file->chunk.size != 0 || !file->info.chunk)
-		clean(file->save, ERR_END, 10);
-	if (file->info.iend)// || !file->info.idat)
-		clean(file->save, ERR_FORMAT, 11);
+	ft_putstr("\n\nChunk name       : ");
+	ft_putstr(file.chunk.name);
+	ft_putstr("\n\nChunk size       : ");
+	ft_putnbr(file.chunk.size);
+}
+
+int			end(t_control *file)
+{
+	if (file->chunk.size != 0)
+		return (ERR_IEND);
+	if (!file->info.chunk || file->info.iend || !file->info.idat)
+		return (ERR_FORMAT);
 	file->info.iend = 1;
 	if (file->verbose)
-	{
-		printf("\nChunk name         : %s\n", file->chunk.name);
-		printf("\nChunk size         : %d\n\n", file->chunk.size);
-	}
+		verbose(*file);
+	return (SUCCESS);
 }
