@@ -27,6 +27,16 @@ static void	fill_infos(t_infos *info, unsigned char *buffer, int offset)
 	info->compression = buffer[i++];
 	info->filter = buffer[i++];
 	info->interlace = buffer[i++];
+	if (info->color == 2 || info->color == 6)
+		info->channels = (info->color == 2 ? 3 : 4);
+	else if (!info->color || info->color == 4)
+		info->channels = (!info->color ? 1 : 2);
+	if (info->channels)
+	{
+		info->bpp = (info->depth / 8) * info->channels;
+		info->scanline = 1 + info->bpp * info->width;
+		info->raw = info->scanline * info->height;
+	}
 }
 
 static int	check_presets(unsigned char depth, unsigned char clr)
@@ -37,11 +47,8 @@ static int	check_presets(unsigned char depth, unsigned char clr)
 
 static void	verbose(t_control file)
 {
-	ft_putstr("\nChunk name       : ");
-	ft_putstr(file.chunk.name);
-	ft_putstr("\n\nChunk size       : ");
-	ft_putnbr(file.chunk.size);
-	ft_putstr("\nPNG size         : ");
+	chunk_infos(file.chunk.name, file.chunk.size);
+	ft_putstr("\nImage dimensions : ");
 	ft_putnbr(file.info.width);
 	ft_putchar('x');
 	ft_putnbr(file.info.height);
@@ -55,6 +62,14 @@ static void	verbose(t_control file)
 	ft_putnbr(file.info.filter);
 	ft_putstr("\nInterlace type   : ");
 	ft_putnbr(file.info.interlace);
+	ft_putstr("\nPixel channels   : ");
+	ft_putnbr(file.info.channels);
+	ft_putstr("\nBytes per pixel  : ");
+	ft_putnbr(file.info.bpp);
+	ft_putstr("\nScanline size    : ");
+	ft_putnbr(file.info.scanline);
+	ft_putstr("\nRaw size         : ");
+	ft_putnbr(file.info.raw);
 }
 
 int			header(t_control *file)
@@ -63,7 +78,7 @@ int			header(t_control *file)
 		return (ERR_IHDR);
 	if (file->info.chunk)
 		return (ERR_FORMAT);
-	fill_infos(&file->info, (unsigned char*)file->save, file->info.position);
+	fill_infos(&file->info, (unsigned char*)file->save, file->info.pos);
 	if (file->verbose)
 		verbose(*file);
 	if (!file->info.width || !file->info.height)

@@ -8,7 +8,8 @@ OBJDIR		= objs/
 OBJSUBDIRS	= core setup utils chunks
 SRCDIR		= srcs/
 LFTDIR		= ./libft/
-INCDIR		= ./incs/ ./libft/incs/
+ZLIBDIR		= ./zlib-1.2.11/
+INCDIR		= ./incs/ ./libft/incs/ ./zlib-1.2.11/
 
 # Source files (Can be changed)
 
@@ -21,6 +22,7 @@ SRC			= main.c				\
 			  chunks/image.c		\
 			  core/png_to_array.c	\
 			  utils/maths.c			\
+			  utils/display.c		\
 			  utils/errors.c
 
 LFT			= ./libft/libft.a
@@ -36,7 +38,7 @@ INCLUDES	= $(foreach include, $(INCDIR), -I$(include))
 
 CC			= gcc
 OBJ			= $(SRC:.c=.o)
-LIBS		= -L$(LFTDIR) -lft
+LIBS		= -L$(LFTDIR) -lft -L$(ZLIBDIR) -lz
 CFLAGS		= $(INCLUDES) -Wall -Wextra -Werror
 
 # Color codes

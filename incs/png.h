@@ -16,16 +16,19 @@
 typedef struct		s_chunk
 {
 	int				size;
-	char			name[5];
+	unsigned char	name[5];
 	unsigned char	length[4];
 }					t_chunk;
 
 typedef struct		s_infos
 {
+	int				pos;
 	int				width;
 	int				height;
-	int				position;
+	unsigned int	raw;
 	unsigned int	chunk;
+	unsigned int	scanline;
+	unsigned char	bpp;
 	unsigned char	day;
 	unsigned char	mins;
 	unsigned char	secs;
@@ -37,6 +40,7 @@ typedef struct		s_infos
 	unsigned char	color;
 	unsigned char	depth;
 	unsigned char	filter;
+	unsigned char	channels;
 	unsigned char	interlace;
 	unsigned char	compression;
 	unsigned short	year;
@@ -47,12 +51,14 @@ typedef struct		s_control
 	int				size;
 	int				debug;
 	int				verbose;
-	char			*save;
 	t_infos			info;
 	t_chunk			chunk;
+	unsigned char	*raw;
+	unsigned char	*save;
+	unsigned char	*stream;
 }					t_control;
 
-typedef int		(*handler)(t_control *file);
+typedef int			(*handler)(t_control *file);
 
 typedef struct		s_process
 {
@@ -66,11 +72,13 @@ int					time(t_control *file);
 int					image(t_control *file);
 int					header(t_control *file);
 int					process_state(t_control file, int code);
-int					check_signature(char *buffer);
+int					check_signature(unsigned char *buffer);
 int					big_endian4(unsigned char *nb);
 int					big_endian2(unsigned char *nb);
 int					png_to_array(char *png, int flag);
+void				chunk_infos(unsigned char *name, int size);
 void				setup(t_control *file, t_process *handler);
-void				fill_chunkname(char *chunk, char *buffer, int size);
+void				fill_chunkname(unsigned char *chunk, unsigned char *save,
+									int size);
 
 #endif

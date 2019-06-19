@@ -22,6 +22,7 @@
 # define DEBUG			2
 # define SUCCESS		0
 # define VERBOSE		1
+# define IDAT_BUFFER	8388608
 # define MAX_SIZE		33554432
 # define NB_CHUNKS		3
 # define NB_ERRORS		15
