@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   image.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/21 04:53:26 by kibotrel          #+#    #+#             */
+/*   Updated: 2019/06/21 06:07:09 by kibotrel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -6,17 +18,12 @@
 #include "macros.h"
 #include "png.h"
 
-static void	verbose(t_control file)
-{
-	chunk_infos(file.chunk.name, file.chunk.size);
-}
-
 static int	get_raw_chunk(t_control *file)
 {
 	z_stream		z;
 
 	if (!(file->raw = (unsigned char*)malloc(file->info.raw + 1)))
-		return (ERR_MALLOC);
+		return (ERROR);
 	z.zalloc = Z_NULL;
 	z.zfree = Z_NULL;
 	z.opaque = Z_NULL;
@@ -30,21 +37,26 @@ static int	get_raw_chunk(t_control *file)
 	return (SUCCESS);
 }
 
-static void	print_memory(t_control file)
+static int	get_pixel_values(t_control *file, int w, int h)
 {
-	char			base[16] = "0123456789ABCDEF";
-	unsigned int	i;
+	int				line;
+	int				filter;
+	unsigned int	pos;
 
-	i = 0;
-	ft_putstr("\nChunk data       : ");
-	while(i < file.info.raw)
+	pos = 0;
+	line = 0;
+	if (!(file->pixels = (unsigned int*)malloc(sizeof(unsigned int) * w * h)))
+		return (ERROR);
+	ft_bzero(file->pixels, sizeof(unsigned int) * w * h);
+	while (pos < file->info.raw)
 	{
-		ft_putchar(base[file.raw[i] / 16]);
-		ft_putchar(base[file.raw[i] % 16]);
-		ft_putchar(' ');
-		if (!(++i % file.info.scanline))
-			ft_putstr("\n                   ");
+		if ((filter = file->raw[file->info.scanline * line]) > 4)
+			return (ERROR);
+		unfilter(file, line, filter);
+		line++;
+		pos += file->info.scanline;
 	}
+	return (SUCCESS);
 }
 
 int			image(t_control *file)
@@ -56,14 +68,21 @@ int			image(t_control *file)
 	if (file->info.idat)
 		return (ERR_HANDLED);
 	file->info.idat = 1;
-	file->verbose ? verbose(*file) : 0;
+	ft_putchar('\n');
+	file->verbose ? print_chunk_basics(file->chunk.name, file->chunk.size) : 0;
 	if (!(file->stream = (unsigned char*)ft_strnew(IDAT_BUFFER)))
-		return (ERR_MALLOC);
+		return (ERR_IMAGE);
 	ft_memcpy(file->stream, file->save + file->info.pos + 8, file->chunk.size);
-	get_raw_chunk(file);
+	if (get_raw_chunk(file))
+		return (ERR_IMAGE);
+	if (get_pixel_values(file, file->info.width, file->info.height))
+		return (ERR_IMAGE);
+	if (file->verbose)
 	{
-		file->verbose ? print_memory(*file) : 0;
+		print_memory(*file);
+		ft_putchar('\n');
 	}
 	free(file->stream);
+	free(file->raw);
 	return (SUCCESS);
 }

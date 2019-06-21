@@ -21,9 +21,11 @@ SRC			= main.c				\
 			  chunks/time.c			\
 			  chunks/image.c		\
 			  core/png_to_array.c	\
+			  core/selector.c		\
 			  utils/maths.c			\
 			  utils/display.c		\
-			  utils/errors.c
+			  utils/errors.c		\
+			  utils/filters.c
 
 LFT			= ./libft/libft.a
 

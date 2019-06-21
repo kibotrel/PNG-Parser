@@ -1,97 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   png_to_bmp.c                                       :+:      :+:    :+:   */
+/*   png_to_array.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 16:16:17 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/14 16:25:10 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/21 01:40:29 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
+#include <fcntl.h>
 #include "libft.h"
 #include "macros.h"
 #include "png.h"
 
-static void	png_structure(t_control file, unsigned char *save)
+static void	parse_png(t_control *file, int *out)
 {
-	ft_putendl("\n--- Debug mode ---\n\nChunks :\n");
-	while (file.info.pos < file.size)
+	file->debug ? print_chunks(*file) : 0;
+	*out = check_signature(file->save);
+	while (!*out && file->info.pos < file->size)
 	{
-		ft_memcpy(file.chunk.length, save + file.info.pos, 4);
-		file.chunk.size = big_endian4(file.chunk.length);
-		fill_chunkname(file.chunk.name, save + file.info.pos + 4, 4);
-		ft_putendl((char*)file.chunk.name);
-		file.info.pos += file.chunk.size + 12;
-	}
-}
-
-static int	read_png(t_control *file, unsigned char *save)
-{
-	int				i;
-	int 			out;
-	t_process		handler[NB_CHUNKS + 1] = {{NULL, NULL}};
-
-	file->verbose ? ft_putendl("\n--- Verbose mode ---") : 0;
-	setup(file, handler);
-	file->debug ? png_structure(*file, file->save) : 0;
-	out = check_signature(save);
-	while (!out && file->info.pos < file->size)
-	{
-		i = -1;
-		ft_memcpy(file->chunk.length, save + file->info.pos, 4);
+		ft_memcpy(file->chunk.length, file->save + file->info.pos, 4);
 		file->chunk.size = big_endian4(file->chunk.length);
-		fill_chunkname(file->chunk.name, save + file->info.pos + 4, 4);
-		while (handler[++i].type)
-			if (!ft_strcmp(handler[i].type, (char*)file->chunk.name))
-			{
-				out = handler[i].process(file);
-				break;
-			}
+		get_chunkname(file->chunk.name, file->save + file->info.pos + 4, 4);
+		*out = selector(file);
 		file->info.pos += file->chunk.size + 12;
 	}
-	return (out);
-}
-
-static void	debug(t_control file, int code)
-{
-	if (code && !file.debug)
-		ft_putstr("\n\n");
-	else
-		ft_putchar('\n');
-	ft_putstr("PNG Parser exit with code ");
-	ft_putnbr(code);
-	ft_putstr(" on chunk ");
-	ft_putstr((char*)file.chunk.name);
-	ft_putstr(".\n");
 }
 
 int			png_to_array(char *png, int flag)
 {
-	int				out;
-	FILE			*f;
-	t_control		file;
+	int			fd;
+	int			out;
+	t_control	file;
 
-	out = 0;
+	setup(&file, flag);
+	flag_mode(file.verbose, file.debug);
 	if (!(file.save = (unsigned char*)malloc(MAX_SIZE)))
 		out = ERR_MALLOC;
-	if (!out && !(f = fopen(png, "r")))
+	else if ((fd = open(png, O_RDONLY)) < 0)
 		out = ERR_OPEN;
-	if (!out)
+	else
 	{
-		file.size = fread(file.save, sizeof(char), MAX_SIZE, f);
-		file.verbose = (flag == VERBOSE ? ON : OFF);
-		file.debug = (flag == DEBUG ? ON : OFF);
-		if (file.size <= MAX_SIZE && feof(f) && !ferror(f) && !fclose(f))
-			out = read_png(&file, file.save);
-		else
-			out = ERR_FILE;
+		file.size = read(fd, file.save, MAX_SIZE);
+		is_valid_read(file.size, &out);
+		parse_png(&file, &out);
 	}
 	out != ERR_MALLOC ? free(file.save) : 0;
-	if (file.debug)
-		debug(file, out);
-	return (process_state(file, out));
+	file.debug ? print_state(file, out) : 0;
+	return (output(file, out));
 }
