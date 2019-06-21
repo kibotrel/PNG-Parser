@@ -1,8 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   errors.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/21 04:53:54 by kibotrel          #+#    #+#             */
+/*   Updated: 2019/06/21 05:37:31 by kibotrel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "macros.h"
 #include "png.h"
 
-static void	fill_messages(char **errors)
+void		is_valid_read(int size, int *out)
+{
+	if (size <= 0)
+		*out = ERR_READ;
+	else if (size >= MAX_SIZE)
+		*out = ERR_FILE;
+}
+
+int			check_presets(unsigned char depth, unsigned char color)
+{
+	if (color == 3 && depth == 16)
+		return (ERROR);
+	else if ((color == 2 || color == 4 || color == 6) && depth < 8)
+		return (ERROR);
+	else
+		return (SUCCESS);
+}
+static void	messages(char **errors)
 {
 	int		i;
 
@@ -23,19 +52,26 @@ static void	fill_messages(char **errors)
 	errors[++i] = "\033[31;1mError :\033[0m File date isn't well formated.\0";
 	errors[++i] = "\033[31;1mError :\033[0m Incorrect IDAT chunk.\0";
 	errors[++i] = "\033[31;1mError :\033[0m Settings not handled.\0";
+	errors[++i] = "\033[31;1mError :\033[0m Can't read the given file.\0";
+	errors[++i] = "\033[31;1mError :\033[0m Failed to retrieve image data\0";
 }
 
-int			process_state(t_control file, int code)
+int		output(t_control file, int code)
 {
 	char	*errors[NB_ERRORS + 1];
 
-	if (file.info.chunk >= 1 || code == SUCCESS)
-		ft_putchar('\n');
-	else
+	(void)file;
+	if (!code && file.verbose)
 		ft_putstr("\n\n");
-	if (file.verbose)
+	else if ((!code && file.debug))
 		ft_putchar('\n');
-	fill_messages(errors);
+	else if (code == ERR_HANDLED && (file.verbose || file.debug))
+		ft_putchar('\n');
+	if (code == ERR_HANDLED && file.verbose)
+		ft_putchar('\n');
+	else if ((code == ERR_SIGN || code == ERR_OPEN) && !file.verbose)
+		ft_putchar('\n');
+	messages(errors);
 	ft_putendl(errors[code]);
 	ft_putchar('\n');
 	return (code);

@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 16:16:22 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/14 16:16:23 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/21 01:27:36 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,16 @@
 #include "macros.h"
 #include "png.h"
 
-static void	fill_infos(t_infos *info, unsigned char *buffer, int offset)
+static void	get_chunk_infos(t_infos *info, unsigned char *buffer, int offset)
 {
-	int	i;
-
-	i = offset + 16;
 	info->chunk++;
-	info->width = big_endian4(buffer + i - 8);
-	info->height = big_endian4(buffer + i - 4);
-	info->depth = buffer[i++];
-	info->color = buffer[i++];
-	info->compression = buffer[i++];
-	info->filter = buffer[i++];
-	info->interlace = buffer[i++];
+	info->width = big_endian4(buffer + offset - 8);
+	info->height = big_endian4(buffer + offset - 4);
+	info->depth = buffer[offset++];
+	info->color = buffer[offset++];
+	info->compression = buffer[offset++];
+	info->filter = buffer[offset++];
+	info->interlace = buffer[offset++];
 	if (info->color == 2 || info->color == 6)
 		info->channels = (info->color == 2 ? 3 : 4);
 	else if (!info->color || info->color == 4)
@@ -39,15 +36,9 @@ static void	fill_infos(t_infos *info, unsigned char *buffer, int offset)
 	}
 }
 
-static int	check_presets(unsigned char depth, unsigned char clr)
-{
-	return (((clr == 3 && depth == 16)
-			|| ((clr == 2 || clr == 4 || clr == 6) && depth < 8)) ? 0 : 1);
-}
-
 static void	verbose(t_control file)
 {
-	chunk_infos(file.chunk.name, file.chunk.size);
+	print_chunk_basics(file.chunk.name, file.chunk.size);
 	ft_putstr("\nImage dimensions : ");
 	ft_putnbr(file.info.width);
 	ft_putchar('x');
@@ -70,6 +61,7 @@ static void	verbose(t_control file)
 	ft_putnbr(file.info.scanline);
 	ft_putstr("\nRaw size         : ");
 	ft_putnbr(file.info.raw);
+	ft_putstr("\n");
 }
 
 int			header(t_control *file)
@@ -78,7 +70,7 @@ int			header(t_control *file)
 		return (ERR_IHDR);
 	if (file->info.chunk)
 		return (ERR_FORMAT);
-	fill_infos(&file->info, (unsigned char*)file->save, file->info.pos);
+	get_chunk_infos(&file->info, file->save, file->info.pos + 16);
 	if (file->verbose)
 		verbose(*file);
 	if (!file->info.width || !file->info.height)
@@ -87,7 +79,7 @@ int			header(t_control *file)
 		return (ERR_DEPTH);
 	if (file->info.color > 6 || file->info.color == 1 || file->info.color == 5)
 		return (ERR_COLOR);
-	if (!check_presets(file->info.depth, file->info.color))
+	if (check_presets(file->info.depth, file->info.color))
 		return (ERR_PRESET);
 	if (file->info.depth != 8
 		|| (file->info.color != 2 && file->info.color != 6)

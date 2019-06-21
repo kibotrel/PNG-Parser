@@ -1,11 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   end.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/21 04:53:42 by kibotrel          #+#    #+#             */
+/*   Updated: 2019/06/21 04:53:43 by kibotrel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "macros.h"
 #include "png.h"
-
-static void	verbose(t_control file)
-{
-	chunk_infos(file.chunk.name, file.chunk.size);
-}
 
 int			end(t_control *file)
 {
@@ -15,6 +22,6 @@ int			end(t_control *file)
 		return (ERR_FORMAT);
 	file->info.iend = 1;
 	if (file->verbose)
-		verbose(*file);
+		print_chunk_basics(file->chunk.name, file->chunk.size);
 	return (SUCCESS);
 }
