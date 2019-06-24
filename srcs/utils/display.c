@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 04:53:50 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/21 04:53:51 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/24 16:45:33 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	print_memory(t_control file)
 		if (!(++i % file.info.scanline))
 			ft_putstr("\n                   ");
 	}
+	ft_putchar('\n');
 }
 
 void	flag_mode(int verbose, int debug)
@@ -61,6 +62,8 @@ void	print_chunks(t_control file)
 
 void	print_state(t_control file, int code)
 {
+	if (!ft_strcmp(file.chunk.name, "IHDR"))
+		ft_putchar('\n');
 	ft_putstr("PNG Parser exit with code ");
 	ft_putnbr(code);
 	if (*file.chunk.name)

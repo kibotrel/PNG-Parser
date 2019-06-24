@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 20:10:23 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/21 07:37:46 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/24 14:21:09 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int		selector(t_control *file)
 void	unfilter(t_control *file, int y, int filter)
 {
 	if (filter == 1)
-		sub(file, y);
+		sub(file->raw, file->info.bpp, file->info.scanline, y);
 	if (filter == 2)
-		up(file, y);
+		up(file->raw, file->info.scanline, y);
 	if (filter == 3)
-		average(file, y);
-	// if (filter == 4)
-	// 	paeth(file, y);
+		average(file->raw, file->info.bpp, file->info.scanline, y);
+	if (filter == 4)
+		paeth(file->raw, file->info.bpp, file->info.scanline, y);
 }
