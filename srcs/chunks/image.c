@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 04:53:26 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/21 06:07:09 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/24 19:28:46 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "macros.h"
 #include "png.h"
 
-static int	get_raw_chunk(t_control *file)
+static int			get_raw_chunk(t_control *file)
 {
 	z_stream		z;
 
@@ -37,7 +37,40 @@ static int	get_raw_chunk(t_control *file)
 	return (SUCCESS);
 }
 
-static int	get_pixel_values(t_control *file, int w, int h)
+static unsigned int	create_pixel(unsigned char *raw, int bpp, int pos)
+{
+	int				i;
+	int				shift;
+	unsigned int	pixel;
+
+	i = -1;
+	pixel = 0;
+	shift = bpp - 1;
+	while (++i < bpp)
+		pixel |= (raw[pos++] << (8 * shift--));
+	return (pixel);
+}
+
+static void			get_pixel_array(t_control *file)
+{
+	int				i;
+	int				size;
+	unsigned int	pos;
+
+	i = 0;
+	pos = 0;
+	size = file->info.width * file->info.height;
+	while (pos < file->info.raw)
+	{
+		if (!(pos % file->info.scanline))
+			pos++;
+		if (pos < file->info.raw && i <= size)
+			file->pixels[i++] = create_pixel(file->raw, file->info.bpp, pos);
+		pos += file->info.bpp;
+	}
+}
+
+static int			get_pixel_values(t_control *file, int w, int h)
 {
 	int				line;
 	int				filter;
@@ -56,10 +89,11 @@ static int	get_pixel_values(t_control *file, int w, int h)
 		line++;
 		pos += file->info.scanline;
 	}
+	get_pixel_array(file);
 	return (SUCCESS);
 }
 
-int			image(t_control *file)
+int					image(t_control *file)
 {
 	if (file->chunk.size == 0)
 		return (ERR_IDAT);
@@ -75,13 +109,13 @@ int			image(t_control *file)
 	ft_memcpy(file->stream, file->save + file->info.pos + 8, file->chunk.size);
 	if (get_raw_chunk(file))
 		return (ERR_IMAGE);
+	if (file->verbose)
+		print_memory(*file);
 	if (get_pixel_values(file, file->info.width, file->info.height))
 		return (ERR_IMAGE);
 	if (file->verbose)
-	{
 		print_memory(*file);
-		ft_putchar('\n');
-	}
+
 	free(file->stream);
 	free(file->raw);
 	return (SUCCESS);
