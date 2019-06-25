@@ -1,5 +1,6 @@
 # Objects directories - Files
 objs
+zlib-1.2.11
 *.o
 
 # Static libraries - Headers
