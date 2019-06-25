@@ -1,33 +1,27 @@
 # Executable's name (Can be changed)
 
-NAME		= png-to-bmp
+NAME		= libpng.a
 
 # All the directories needed to know where files should be (Can be changed)
 
 OBJDIR		= objs/
 OBJSUBDIRS	= core setup utils chunks
 SRCDIR		= srcs/
-LFTDIR		= ./libft/
 ZLIBDIR		= ./zlib-1.2.11/
-INCDIR		= ./incs/ ./libft/incs/ ./zlib-1.2.11/
+INCDIR		= ./incs/ ./zlib-1.2.11/ ./libft/incs/
 
 # Source files (Can be changed)
 
-SRC			= main.c				\
-			  setup/setup.c			\
-			  chunks/header.c		\
-			  chunks/end.c			\
-			  chunks/signature.c	\
-			  chunks/time.c			\
-			  chunks/image.c		\
-			  core/png_to_array.c	\
-			  core/selector.c		\
-			  utils/maths.c			\
-			  utils/display.c		\
-			  utils/errors.c		\
-			  utils/filters.c
-
-LFT			= ./libft/libft.a
+SRC			= setup/setup.c								\
+														\
+			  chunks/header.c		chunks/end.c		\
+			  chunks/signature.c	chunks/time.c		\
+			  chunks/image.c							\
+														\
+			  core/png_to_array.c	core/selector.c		\
+														\
+			  utils/maths.c			utils/display.c		\
+			  utils/errors.c		utils/filters.c
 
 # Some tricks in order to get the makefile doing his job the way I want (Can't be changed)
 
@@ -53,9 +47,9 @@ YELLOW		= \033[33m
 
 all: $(SUBDIRS) $(NAME)
 
-$(NAME): $(LFT) $(OBJDIR) $(COBJ)
+$(NAME): $(OBJDIR) $(COBJ)
 	@echo "$(YELLOW)\n      - Building $(RESET)$(NAME) $(YELLOW)...\n$(RESET)"
-	@$(CC) -o $(NAME) $(COBJ) $(LIBS)
+	@ar rcs $(NAME) $(COBJ)
 	@echo "$(GREEN)***   Project $(NAME) successfully compiled   ***\n$(RESET)"
 
 $(OBJDIR):
@@ -70,11 +64,6 @@ $(OBJDIR)%.o: $(SRCDIR)%.c
 	@echo "$(YELLOW)      - Compiling :$(RESET)" $<
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-# Compilation rule for function library "libft"
-
-$(LFT):
-	@make -sC $(LFTDIR)
-
 # Deleting all .o files and then the directory where they were located
 
 clean:
@@ -84,7 +73,6 @@ clean:
 # Deleting the executable after cleaning up all .o files
 
 fclean: clean
-	@make -sC $(LFTDIR) fclean
 	@echo "$(GREEN)***   Deleting executable file from $(NAME)   ...   ***\n$(RESET)"
 	@$(RM) $(NAME)
 
