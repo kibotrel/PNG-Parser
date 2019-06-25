@@ -6,13 +6,11 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 04:53:26 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/25 14:30:10 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 16:44:32 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <assert.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include "zlib.h"
 #include "libft.h"
 #include "macros.h"

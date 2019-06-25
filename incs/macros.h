@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 16:03:44 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/21 05:38:21 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 16:52:49 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@
 # define VERBOSE		1
 # define MAX_SIZE		33554432
 # define NB_CHUNKS		3
-# define NB_ERRORS		17
+# define NB_ERRORS		18
 # define IDAT_BUFFER	8388608
-
 /*
 **	Error codes
 */
@@ -45,6 +44,7 @@
 # define ERR_DEPTH		7
 # define ERR_COLOR		8
 # define ERR_IMAGE		17
+# define ERR_CLOSE		18
 # define ERR_MALLOC		1
 # define ERR_PRESET		9
 # define ERR_FORMAT		11

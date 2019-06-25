@@ -6,12 +6,11 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 16:10:40 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/14 16:26:02 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 16:45:50 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "macros.h"
-#include "png.h"
 
 int	check_signature(unsigned char *buffer)
 {

@@ -6,11 +6,10 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 16:16:17 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/25 14:48:23 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 16:53:04 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -48,7 +47,10 @@ int			png_to_array(char *png, t_png *image, int flag)
 	{
 		file.size = read(fd, file.save, MAX_SIZE);
 		is_valid_read(file.size, &out);
-		parse_png(&file, &out);
+		if (!close(fd))
+			parse_png(&file, &out);
+		else
+			out = ERR_CLOSE;
 		!out ? set_array(&file, image) : 0;
 	}
 	out != ERR_MALLOC ? free(file.save) : 0;

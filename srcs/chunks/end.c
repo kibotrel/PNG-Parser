@@ -6,11 +6,10 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 04:53:42 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/21 04:53:43 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 16:44:45 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "macros.h"
 #include "png.h"
 

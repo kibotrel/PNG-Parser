@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 04:53:54 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/21 05:37:31 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 16:54:53 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	messages(char **errors)
 	errors[++i] = "\033[31;1mError :\033[0m Settings not handled.\0";
 	errors[++i] = "\033[31;1mError :\033[0m Can't read the given file.\0";
 	errors[++i] = "\033[31;1mError :\033[0m Failed to retrieve image data\0";
+	errors[++i] = "\033[31;1mError :\033[0m Can't close file\0";
 }
 
 int		output(t_control file, int code)
@@ -75,5 +76,4 @@ int		output(t_control file, int code)
 	ft_putendl(errors[code]);
 	ft_putchar('\n');
 	return (code);
-
 }

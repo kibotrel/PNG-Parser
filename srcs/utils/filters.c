@@ -6,15 +6,12 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 04:53:14 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/24 14:21:38 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 16:56:11 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
-#include "libft.h"
 #include "png.h"
-
-#include <stdio.h>
 
 void	sub(unsigned char *raw, int bpp, int h, int y)
 {
