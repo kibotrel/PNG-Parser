@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 16:16:17 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/21 01:40:29 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 14:48:23 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ static void	parse_png(t_control *file, int *out)
 	}
 }
 
-int			png_to_array(char *png, int flag)
+int			png_to_array(char *png, t_png *image, int flag)
 {
 	int			fd;
 	int			out;
 	t_control	file;
 
-	setup(&file, flag);
+	setup(&file, image, flag);
 	flag_mode(file.verbose, file.debug);
 	if (!(file.save = (unsigned char*)malloc(MAX_SIZE)))
 		out = ERR_MALLOC;
@@ -49,6 +49,7 @@ int			png_to_array(char *png, int flag)
 		file.size = read(fd, file.save, MAX_SIZE);
 		is_valid_read(file.size, &out);
 		parse_png(&file, &out);
+		!out ? set_array(&file, image) : 0;
 	}
 	out != ERR_MALLOC ? free(file.save) : 0;
 	file.debug ? print_state(file, out) : 0;

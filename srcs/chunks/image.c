@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 04:53:26 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/24 19:28:46 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 14:30:10 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ static unsigned int	create_pixel(unsigned char *raw, int bpp, int pos)
 	unsigned int	pixel;
 
 	i = -1;
-	pixel = 0;
 	shift = bpp - 1;
-	while (++i < bpp)
+	pixel = (raw[pos + bpp - 1] << (8 * shift--));
+	while (++i < bpp - 1)
 		pixel |= (raw[pos++] << (8 * shift--));
 	return (pixel);
 }
 
-static void			get_pixel_array(t_control *file)
+static void			get_pixel_value(t_control *file)
 {
 	int				i;
 	int				size;
@@ -70,7 +70,7 @@ static void			get_pixel_array(t_control *file)
 	}
 }
 
-static int			get_pixel_values(t_control *file, int w, int h)
+static int			get_pixel_array(t_control *file, int w, int h)
 {
 	int				line;
 	int				filter;
@@ -89,7 +89,8 @@ static int			get_pixel_values(t_control *file, int w, int h)
 		line++;
 		pos += file->info.scanline;
 	}
-	get_pixel_array(file);
+	file->verbose ? print_memory(*file, 1) : 0;
+	get_pixel_value(file);
 	return (SUCCESS);
 }
 
@@ -109,13 +110,9 @@ int					image(t_control *file)
 	ft_memcpy(file->stream, file->save + file->info.pos + 8, file->chunk.size);
 	if (get_raw_chunk(file))
 		return (ERR_IMAGE);
-	if (file->verbose)
-		print_memory(*file);
-	if (get_pixel_values(file, file->info.width, file->info.height))
+	file->verbose ? print_memory(*file, 0) : 0;
+	if (get_pixel_array(file, file->info.width, file->info.height))
 		return (ERR_IMAGE);
-	if (file->verbose)
-		print_memory(*file);
-
 	free(file->stream);
 	free(file->raw);
 	return (SUCCESS);
