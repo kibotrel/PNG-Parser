@@ -1,2 +1,2 @@
 # PNG-Parser
-Convert images into bitmaps
+[![CodeFactor](https://www.codefactor.io/repository/github/kibotrel/png-parser/badge)](https://www.codefactor.io/repository/github/kibotrel/png-parser)
