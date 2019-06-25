@@ -6,7 +6,7 @@
 #    By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 16:29:02 by kibotrel          #+#    #+#              #
-#    Updated: 2019/06/25 19:58:07 by kibotrel         ###   ########.fr        #
+#    Updated: 2019/06/25 21:31:40 by kibotrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME		= libpng.a
 OBJDIR		= objs/
 OBJSUBDIRS	= core setup utils chunks
 SRCDIR		= srcs/
-INCDIR		= ./incs/ ../Documents/42-Wolf3D/libft/incs/ ./zlib-1.2.11/
+INCDIR        = ./incs/ ../libft/incs/ ./zlib-1.2.11/
 
 # Some macros (Can't be changed)
 
@@ -71,7 +71,7 @@ ZLIB:
 	@mkdir -p ZLIB
 	@mkdir -p ZLIB/build
 	@cd ZLIB/build;									\
-	$(ZLIBDIR)/configure --prefix $(ABSDIR)/ZLIB;	\
+	$(ZLIBDIR)configure --prefix $(ABSDIR)/ZLIB;    \
 	make -j; 										\
 	make install
 
