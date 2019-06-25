@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2019/06/25 16:29:02 by kibotrel          #+#    #+#              #
+#    Updated: 2019/06/25 16:40:28 by kibotrel         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 # Executable's name (Can be changed)
 
 NAME		= libpng.a
@@ -7,11 +19,16 @@ NAME		= libpng.a
 OBJDIR		= objs/
 OBJSUBDIRS	= core setup utils chunks
 SRCDIR		= srcs/
-ZLIBDIR		= ./zlib-1.2.11/
-INCDIR		= ./incs/ ./zlib-1.2.11/ ./libft/incs/
+INCDIR		= ./incs/ ../Documents/42-Wolf3D/libft/incs/ ./zlib-1.2.11/
+
+# Some macros (Can't be changed)
+
+ABSDIR		= $(shell pwd)
+ZLIBDIR		= $(ABSDIR)/zlib-1.2.11/
 
 # Source files (Can be changed)
 
+INCS		= incs/macros.h incs/png.h
 SRC			= setup/setup.c								\
 														\
 			  chunks/header.c		chunks/end.c		\
@@ -34,7 +51,6 @@ INCLUDES	= $(foreach include, $(INCDIR), -I$(include))
 
 CC			= gcc
 OBJ			= $(SRC:.c=.o)
-LIBS		= -L$(LFTDIR) -lft -L$(ZLIBDIR) -lz
 CFLAGS		= $(INCLUDES) -Wall -Wextra -Werror
 
 # Color codes
@@ -45,7 +61,15 @@ YELLOW		= \033[33m
 
 # Check if object directory exists, build libft and then the Project
 
-all: $(SUBDIRS) $(NAME)
+all: $(SUBDIRS) ZLIB $(NAME)
+
+ZLIB:
+	@mkdir -p ZLIB
+	@mkdir -p ZLIB/build
+	@cd ZLIB/build;									\
+	$(ZLIBDIR)/configure --prefix $(ABSDIR)/ZLIB;	\
+	make -j; 										\
+	make install
 
 $(NAME): $(OBJDIR) $(COBJ)
 	@echo "$(YELLOW)\n      - Building $(RESET)$(NAME) $(YELLOW)...\n$(RESET)"
@@ -60,7 +84,7 @@ $(SUBDIRS):
 
 # Redefinition of implicit compilation rule to prompt some colors and file names during the said compilation
 
-$(OBJDIR)%.o: $(SRCDIR)%.c
+$(OBJDIR)%.o: $(SRCDIR)%.c $(INCS)
 	@echo "$(YELLOW)      - Compiling :$(RESET)" $<
 	@$(CC) $(CFLAGS) -c $< -o $@
 
@@ -73,6 +97,7 @@ clean:
 # Deleting the executable after cleaning up all .o files
 
 fclean: clean
+	@rm -rf ZLIB
 	@echo "$(GREEN)***   Deleting executable file from $(NAME)   ...   ***\n$(RESET)"
 	@$(RM) $(NAME)
 
