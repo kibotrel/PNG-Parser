@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 16:08:51 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/24 13:58:41 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 17:08:44 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,20 @@ int				big_endian2(unsigned char *nb)
 int				is_power_two(int nb)
 {
 	return ((nb == 1 || nb == 2 || nb == 4 || nb == 8 || nb == 16 ? 1 : 0));
+}
+
+unsigned int	create_pixel(unsigned char *raw, int bpp, int pos)
+{
+	int				i;
+	int				shift;
+	unsigned int	pixel;
+
+	i = -1;
+	shift = bpp - 1;
+	pixel = (raw[pos + bpp - 1] << (8 * shift--));
+	while (++i < bpp - 1)
+		pixel |= (raw[pos++] << (8 * shift--));
+	return (pixel);
 }
 
 unsigned char	predict(unsigned char a, unsigned char b, unsigned char c)

@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 04:53:26 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/25 16:44:32 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 17:08:33 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,6 @@ static int			get_raw_chunk(t_control *file)
 	inflate(&z, Z_NO_FLUSH);
 	inflateEnd(&z);
 	return (SUCCESS);
-}
-
-static unsigned int	create_pixel(unsigned char *raw, int bpp, int pos)
-{
-	int				i;
-	int				shift;
-	unsigned int	pixel;
-
-	i = -1;
-	shift = bpp - 1;
-	pixel = (raw[pos + bpp - 1] << (8 * shift--));
-	while (++i < bpp - 1)
-		pixel |= (raw[pos++] << (8 * shift--));
-	return (pixel);
 }
 
 static void			get_pixel_value(t_control *file)

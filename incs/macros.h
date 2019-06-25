@@ -6,12 +6,12 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 16:03:44 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/25 16:52:49 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 17:10:13 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACRO_H
-# define MACRO_H
+#ifndef MACROS_H
+# define MACROS_H
 
 /*
 **	Useful macros
@@ -27,6 +27,7 @@
 # define NB_CHUNKS		3
 # define NB_ERRORS		18
 # define IDAT_BUFFER	8388608
+
 /*
 **	Error codes
 */

@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 04:53:50 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/25 13:56:07 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 17:18:01 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_chunk_basics(char *name, int size)
 
 void	print_memory(t_control file, int state)
 {
-	char			base[16] = "0123456789ABCDEF";
+	static char		base[16] = "0123456789ABCDEF";
 	unsigned int	i;
 
 	i = 0;
@@ -31,7 +31,7 @@ void	print_memory(t_control file, int state)
 		ft_putstr("\nChunk data       : Inflated\n\n\t\t   ");
 	else
 		ft_putstr("                   Unfiltered\n\n\t\t   ");
-	while(i < file.info.raw)
+	while (i < file.info.raw)
 	{
 		ft_putchar(base[file.raw[i] / 16]);
 		ft_putchar(base[file.raw[i] % 16]);

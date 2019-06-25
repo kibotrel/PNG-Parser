@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 20:10:23 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/25 16:53:42 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 17:17:48 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 int		selector(t_control *file)
 {
 	if (!ft_strcmp(file->chunk.name, "IHDR"))
-		return(header(file));
+		return (header(file));
 	else if (!ft_strcmp(file->chunk.name, "tIME"))
-		return(time(file));
+		return (time(file));
 	else if (!ft_strcmp(file->chunk.name, "IDAT"))
-		return(image(file));
+		return (image(file));
 	else if (!ft_strcmp(file->chunk.name, "IEND"))
-		return(end(file));
+		return (end(file));
 	return (SUCCESS);
 }
 

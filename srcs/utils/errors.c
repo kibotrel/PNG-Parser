@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 04:53:54 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/25 16:54:53 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 17:18:32 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int			check_presets(unsigned char depth, unsigned char color)
 	else
 		return (SUCCESS);
 }
+
 static void	messages(char **errors)
 {
 	int		i;
@@ -57,7 +58,7 @@ static void	messages(char **errors)
 	errors[++i] = "\033[31;1mError :\033[0m Can't close file\0";
 }
 
-int		output(t_control file, int code)
+int			output(t_control file, int code)
 {
 	char	*errors[NB_ERRORS + 1];
 

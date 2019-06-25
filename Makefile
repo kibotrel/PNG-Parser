@@ -6,7 +6,7 @@
 #    By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 16:29:02 by kibotrel          #+#    #+#              #
-#    Updated: 2019/06/25 16:40:28 by kibotrel         ###   ########.fr        #
+#    Updated: 2019/06/25 17:00:36 by kibotrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ ZLIBDIR		= $(ABSDIR)/zlib-1.2.11/
 # Source files (Can be changed)
 
 INCS		= incs/macros.h incs/png.h
+
 SRC			= setup/setup.c								\
 														\
 			  chunks/header.c		chunks/end.c		\

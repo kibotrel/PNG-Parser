@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 04:53:14 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/25 16:56:11 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/25 17:18:53 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sub(unsigned char *raw, int bpp, int h, int y)
 	unsigned char	current;
 
 	x = 0;
-	while(++x < h)
+	while (++x < h)
 	{
 		current = raw[x + y * h];
 		if (x >= bpp + 1)
@@ -38,7 +38,7 @@ void	up(unsigned char *raw, int h, int y)
 	unsigned char	current;
 
 	x = 0;
-	while(++x < h)
+	while (++x < h)
 	{
 		current = raw[x + y * h];
 		if (y)
@@ -57,7 +57,7 @@ void	average(unsigned char *raw, int bpp, int h, int y)
 	unsigned char	current;
 
 	x = 0;
-	while(++x < h)
+	while (++x < h)
 	{
 		current = raw[x + y * h];
 		up = raw[x + (y - 1) * h];
@@ -80,7 +80,7 @@ void	paeth(unsigned char *raw, int bpp, int h, int y)
 	unsigned char	current;
 
 	x = 0;
-	while(++x < h)
+	while (++x < h)
 	{
 		current = raw[x + y * h];
 		up = raw[x + (y - 1) * h];
