@@ -1,13 +1,13 @@
 # PNG-Parser
 [![CodeFactor](https://www.codefactor.io/repository/github/kibotrel/png-parser/badge)](https://www.codefactor.io/repository/github/kibotrel/png-parser) [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
-This project is made to parse and load PNG [(Portable Network Graphics)](https://en.wikipedia.org/wiki/Portable_Network_Graphics) files using this small library (and [zlib](https://github.com/madler/zlib) to uncompress data streams).
+This project is made to parse and load PNG [(Portable Network Graphics)](https://en.wikipedia.org/wiki/Portable_Network_Graphics) files using this small library (and [zlib](https://github.com/madler/zlib) to uncompress data streams) under a MIT License.
 
 ## Install
 
 This should be fully portable (tested on **macOS Sierra 10.12.6** and **Debian Stretch 9.8**).
 
-In order to use this PNG loader in another project, **libft.a**, another library of mine is required. Here is the install process :
+In order to use this PNG loader in another project, **libft.a**, [another library of mine](https://github.com/kibotrel/42-Libft) is required. Here is the install process :
 ```shell
 $> git clone https://github.com/kibotrel/42-Libft libft
 $> git clone --recurse-submodules https://github.com/kibotrel/PNG-Parser libpng
@@ -59,3 +59,21 @@ The given example isn't complete, '[...]' represent the parts you need to fill w
 
 ## Usage
 ### Prototype
+The only function that should be used from this library is :
+```C
+#include "png.h"
+#include "macros.h"
+
+int     png_to_array(char *path, t_png *image, int flag);
+```
+
+Said header files `png.h` and `macros.h` are located in `./incs/`. Type `t_png` is defined as follow :
+
+```C
+typedef struct      s_png
+{
+    int             width;
+	int             height;
+	unsigned int    \*pixels;
+}                   t_png;
+```
