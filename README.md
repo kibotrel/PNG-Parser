@@ -8,14 +8,14 @@ This project is made to parse and load PNG [(Portable Network Graphics)](https:/
 This should be fully portable (tested on **macOS Sierra 10.12.6** and **Debian Stretch 9.8**).
 
 In order to use this PNG loader in another project, **libft.a**, another library of mine is required. Here is the install process :
-```sh
+```shell
 $> git clone https://github.com/kibotrel/42-Libft libft
 $> git clone --recurse-submodules https://github.com/kibotrel/PNG-Parser libpng
 $> make -C libft && make -C libpng
 ```
 
 You'll get a static library called **libpng.a** at the root of **libpng** folder. In order to use it afterwards you may have to include it to the compilation when you call any function of the library in another project.
-```sh
+```shell
 $> gcc -I./libft/incs -I./libpng/incs/ -L./libft/ -lft -L./libpng/ -lpng [...]
 ```
 
