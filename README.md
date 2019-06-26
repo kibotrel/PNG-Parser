@@ -5,9 +5,7 @@ This project is made to parse and load PNG [(Portable Network Graphics)](https:/
 
 ## Install
 
-This should be fully portable (tested on **macOS Sierra 10.12.6** and **Debian Stretch 9.8**).
-
-In order to use this PNG loader in another project, **libft.a**, [another library of mine](https://github.com/kibotrel/42-Libft) is required. Here is the install process :
+This should be fully portable (tested on **macOS Sierra 10.12.6** and **Debian Stretch 9.8**). In order to use this PNG loader in another project, **libft.a**, [another library of mine](https://github.com/kibotrel/42-Libft) is required. Here is the install process :
 ```shell
 $> git clone https://github.com/kibotrel/42-Libft libft
 $> git clone --recurse-submodules https://github.com/kibotrel/PNG-Parser libpng
@@ -68,7 +66,6 @@ int     png_to_array(char *path, t_png *image, int flag);
 ```
 
 Said header files `png.h` and `macros.h` are located in `./incs/`. Type `t_png` is defined as follow :
-
 ```C
 typedef struct      s_png
 {
