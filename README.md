@@ -121,12 +121,11 @@ Here is a valid implementation of `png_to_array()` :
     [...]
 	if (png_to_array("./assets/logo.png", &image, DEBUG))
 	{
-		// Do stuff when an error is triggered.
-	}
-	else
-	{
-		// Do stuff when the file is correctly parsed.
-	}
-	[...]
-
+        // Do stuff when an error is triggered.
+    }
+    else
+    {
+        // Do stuff when the file is correctly parsed.
+    }
+    [...]
 ```
