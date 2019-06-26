@@ -73,7 +73,7 @@ Said header files `png.h` and `macros.h` are located in `./incs/`. Type `t_png` 
 typedef struct      s_png
 {
     int             width;
-	int             height;
-	unsigned int    \*pixels;
+    int             height;
+    unsigned int    \*pixels;
 }                   t_png;
 ```
