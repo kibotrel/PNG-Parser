@@ -128,4 +128,5 @@ Here is a valid implementation of `png_to_array()` :
         // Do stuff when the file is correctly parsed.
     }
     [...]
+}
 ```
