@@ -37,7 +37,6 @@ LPNG    = ./libpng/libpng.a
 # Setup compilation arguments.
 
 CC      = gcc
-OBJ     = $(SRC:.c=.o)
 LIBS    = -L$(LFTDIR) -lft -L$(LPNGDIR) -lpng -L./$(LZDIR) -lz [...]
 CFLAGS  = $(INCLUDES) -Wall -Wextra -Werror [...]
 INCLUDE = $(foreach include, $(INCDIR), -I$(include))
@@ -56,7 +55,7 @@ $(LPNG):
 	make -C $(LPNGDIR) -j
 ```
 
-The given example isn't complete, `[...]` represent the parts you need to fill with your sources files / extra flags or libraries in order to compile your main project correctly.
+The given example isn't complete, '[...]' represent the parts you need to fill with your sources files / extra flags or libraries in order to compile your main project correctly.
 
 ## Usage
 ### Prototype
