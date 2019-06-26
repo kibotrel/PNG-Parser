@@ -119,8 +119,8 @@ Here is a valid implementation of `png_to_array()` :
     t_png   image;
 
     [...]
-	if (png_to_array("./assets/logo.png", &image, DEBUG))
-	{
+    if (png_to_array("./assets/logo.png", &image, DEBUG))
+    {
         // Do stuff when an error is triggered.
     }
     else
