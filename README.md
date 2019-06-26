@@ -98,7 +98,7 @@ Each following error is handled by the program leading to a complete memory free
 * Wrong pressets depth and color-type (*ERROR-CODE 9*)
 * Incorrect [IEND chunk](https://www.w3.org/TR/2003/REC-PNG-20031110/#11IEND) composition (*ERROR-CODE 10*)
 * Invalid file structure (*ERROR-CODE 11*)
-* Incorrect [tIME chunk](https://www.w3.org/TR/2003/REC-PNG-20031110/#11tIME)(*ERROR-CODE 12*)
+* Incorrect [tIME chunk](https://www.w3.org/TR/2003/REC-PNG-20031110/#11tIME) (*ERROR-CODE 12*)
 * Misformated file date (*ERROR-CODE 13*)
 * Incorrect IDAT chunk composition (*ERROR-CODE 14*)
 * Settings not handled by the parsing (*ERROR-CODE 15*)
@@ -106,4 +106,27 @@ Each following error is handled by the program leading to a complete memory free
 * Corrupted or invalid image data (*ERROR-CODE 17*)
 * Unable to close the given file (*ERROR-CODE 18*)
 
-Whenever one of these error occurs, the correct error message is displayed on the standard output and the whole program return an error code that you can retrieve by running :
+Whenever one of these error occurs, the correct error message is displayed on the standard output and the parser returns an error code that you can retrieve.
+
+### Example
+
+Here is a valid implementation of `png_to_array()` :
+```C
+#include "png.h"
+#include "macros.h"
+
+{
+    t_png   image;
+
+    [...]
+	if (png_to_array("./assets/logo.png", &image, DEBUG))
+	{
+		// Do stuff when an error is triggered.
+	}
+	else
+	{
+		// Do stuff when the file is correctly parsed.
+	}
+	[...]
+
+```
