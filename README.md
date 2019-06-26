@@ -74,6 +74,6 @@ typedef struct      s_png
 {
     int             width;
     int             height;
-    unsigned int    \*pixels;
+    unsigned int    *pixels;
 }                   t_png;
 ```
