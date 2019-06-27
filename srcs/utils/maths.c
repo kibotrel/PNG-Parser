@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 16:08:51 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/25 17:08:44 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/06/27 15:44:22 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ unsigned int	create_pixel(unsigned char *raw, int bpp, int pos)
 
 	i = -1;
 	shift = bpp - 1;
-	pixel = (raw[pos + bpp - 1] << (8 * shift--));
-	while (++i < bpp - 1)
+	pixel = 0;
+	while (++i < bpp)
 		pixel |= (raw[pos++] << (8 * shift--));
 	return (pixel);
 }
