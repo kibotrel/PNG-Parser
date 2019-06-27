@@ -65,7 +65,7 @@ The only function that should be used from this library is :
 int     png_to_array(char *path, t_png *image, int flag);
 ```
 
-Said header files `png.h` and `macros.h` are located in `./incs/`. Type `t_png` is defined as follow :
+This function returns `0` if the process ended correctly, a particular error-code (documented bellow) is returned. Said header files `png.h` and `macros.h` are located in `./incs/`. Type `t_png` is defined as follow :
 ```C
 typedef struct      s_png
 {
@@ -82,7 +82,7 @@ Parameter | Description | Possible value
 :---: | :---: | :---:
 `path` | file's path that the function will parse | Only paths followed by ".png" could be a correct input depending on the informations stored in its [IHDR Chunk](https://www.w3.org/TR/2003/REC-PNG-20031110/#11IHDR).
 `*image` | Where informations related to the given PNG would be stored at the end process | Any pointer is a valid value, however be careful, the given structure will be passed through a [bzero()](http://man7.org/linux/man-pages/man3/bzero.3.html) at the beginning of the parsing process no matter what happens after, this pointer will or will not be updated and could be used afterwards.
-flag | Used to display informations during the parsing process | Two values are handled others are simply ignored and considered as `0` (normal mode). `1` or **VERBOSE** macro available in `macros.h` allow the user to see what is stored in each handled chunks then [uncompressing](https://www.w3.org/TR/2003/REC-PNG-20031110/#10Compression) and [unfiltering](https://www.w3.org/TR/2003/REC-PNG-20031110/#9Filters) processes in [IDAT Chunks](https://www.w3.org/TR/2003/REC-PNG-20031110/#11IDAT). `2` or **DEBUG** macro available in the same file allow the user to get more informations about the file structure. Aside of this it prompts in which chunk and which error was trigger at the exit or `0` if everything went well.
+`flag` | Used to display informations during the parsing process | Two values are handled others are simply ignored and considered as `0` (normal mode). `1` or **VERBOSE** macro available in `macros.h` allow the user to see what is stored in each handled chunks then [uncompressing](https://www.w3.org/TR/2003/REC-PNG-20031110/#10Compression) and [unfiltering](https://www.w3.org/TR/2003/REC-PNG-20031110/#9Filters) processes in [IDAT Chunks](https://www.w3.org/TR/2003/REC-PNG-20031110/#11IDAT). `2` or **DEBUG** macro available in the same file allow the user to get more informations about the file structure. Aside of this it prompts in which chunk and which error was trigger at the exit or `0` if everything went well.
 
 ### Error management
 Each following error is handled by the program leading to a complete memory free :
@@ -119,7 +119,7 @@ Here is a valid implementation of `png_to_array()` :
     t_png   image;
 
     [...]
-    if (png_to_array("./assets/logo.png", &image, DEBUG))
+    if (png_to_array("file.png", &image, DEBUG))
     {
         // Do stuff when an error is triggered.
     }
