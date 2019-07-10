@@ -1,7 +1,7 @@
 # PNG-Parser
 [![CodeFactor](https://www.codefactor.io/repository/github/kibotrel/png-parser/badge)](https://www.codefactor.io/repository/github/kibotrel/png-parser) [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
-This project is made to parse and load PNG [(Portable Network Graphics)](https://en.wikipedia.org/wiki/Portable_Network_Graphics) files using this small library (and [zlib](https://github.com/madler/zlib) to uncompress data streams) under a MIT License.
+This project is made to parse and load PNG [(Portable Network Graphics)](https://en.wikipedia.org/wiki/Portable_Network_Graphics) files using this small library (and [zlib](https://github.com/madler/zlib) to inflates data streams) under a MIT License.
 
 ## Install
 
