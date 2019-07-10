@@ -21,10 +21,10 @@ This process can be automated using a **Makefile** in the parent folder of these
 ```Makefile
 # All the directories needed to know where files should be.
 
-ZLIB_DIR	= libpng/ZLIB/lib/
-INCS_DIR	= ./libft/incs/ ./libpng/incs/ [...]
-LIBFT_DIR	= libft/
-LIBPNG_DIR	= libpng/
+LZ_DIR   = libpng/ZLIB/lib/
+LFT_DIR  = libft/
+INCS_DIR = ./libft/incs/ ./libpng/incs/ [...]
+LPNG_DIR = libpng/
 
 # The two different libraries.
 
@@ -34,10 +34,10 @@ LPNG    = ./libpng/libpng.a
 
 # Setup compilation arguments.
 
-CC      = gcc
-LIBS    = -L$(LFTDIR) -lft -L$(LPNGDIR) -lpng -L./$(LZDIR) -lz [...]
-CFLAGS  = $(INCLUDES) -Wall -Wextra -Werror [...]
-INCLUDE = $(foreach include, $(INCDIR), -I$(include))
+CC       = gcc
+LIBS     = -L$(LFT_DIR) -lft -L$(LPNG_DIR) -lpng -L./$(LZ_DIR) -lz [...]
+CFLAGS   = $(INCLUDES) -Wall -Wextra -Werror [...]
+INCLUDES = $(foreach include, $(INCS_DIR), -I$(include))
 
 # Compile the two libraries (+zlib) and then compile the main project where png_to_array() is used.
 
@@ -51,6 +51,8 @@ $(LFT):
 
 $(LPNG):
 	make -C $(LPNGDIR) -j
+
+[...]
 ```
 
 The given example isn't complete, '[...]' represent the parts you need to fill with your sources files / extra flags or libraries in order to compile your main project correctly upon `make`.
