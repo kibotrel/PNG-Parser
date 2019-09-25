@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 04:53:54 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/25 17:18:32 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/07/11 17:41:04 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,11 @@ int			output(t_control file, int code)
 {
 	char	*errors[NB_ERRORS + 1];
 
-	(void)file;
 	if (!code && file.verbose)
 		ft_putstr("\n\n");
-	else if ((!code && file.debug))
+	else if ((!code && file.debug) || (!file.debug && !file.verbose))
 		ft_putchar('\n');
 	else if (code == ERR_HANDLED && (file.verbose || file.debug))
-		ft_putchar('\n');
-	if (code == ERR_HANDLED && file.verbose)
 		ft_putchar('\n');
 	else if ((code == ERR_SIGN || code == ERR_OPEN) && !file.verbose)
 		ft_putchar('\n');

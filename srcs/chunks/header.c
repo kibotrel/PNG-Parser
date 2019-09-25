@@ -6,7 +6,7 @@
 /*   By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 16:16:22 by kibotrel          #+#    #+#             */
-/*   Updated: 2019/06/27 15:44:46 by kibotrel         ###   ########.fr       */
+/*   Updated: 2019/07/11 17:30:38 by kibotrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int			header(t_control *file)
 	if (check_presets(file->info.depth, file->info.color))
 		return (ERR_PRESET);
 	if (file->info.depth != 8 || file->info.color != 2
-		|| file->info.compression || file->info.filter || file->info.interlac
+		|| file->info.compression || file->info.filter || file->info.interlace)
 		return (ERR_HANDLED);
 	return (SUCCESS);
 }
