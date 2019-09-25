@@ -6,7 +6,7 @@
 #    By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 16:29:02 by kibotrel          #+#    #+#              #
-#    Updated: 2019/09/25 15:04:28 by kibotrel         ###   ########.fr        #
+#    Updated: 2019/09/25 15:10:23 by kibotrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,7 @@ clean:
 
 fclean: clean
 	@rm -rf ZLIB
-	@echo "$(GREEN)***   Deleting executable file from $(NAME)   ...   ***\n$(RESET)"
+	@echo "$(GREEN)***   Deleting library $(NAME)   ...   ***\n$(RESET)"
 	@$(RM) $(NAME)
 
 re: fclean all
