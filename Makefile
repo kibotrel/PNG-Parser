@@ -6,7 +6,7 @@
 #    By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 16:29:02 by kibotrel          #+#    #+#              #
-#    Updated: 2019/09/25 15:12:45 by kibotrel         ###   ########.fr        #
+#    Updated: 2019/09/25 15:24:05 by kibotrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ INCDIR        = ./incs/ ../libft/incs/ ./zlib-1.2.11/
 ABSDIR		= $(shell pwd)
 ZLIBDIR		= $(ABSDIR)/zlib-1.2.11/
 LZDIR		= ZLIB/lib/
-LFTDIR		= ../Documents/42-Wolf3D/libft/
+LFTDIR		= ../libft/
 
 # Source files (Can be changed)
 
