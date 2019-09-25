@@ -6,7 +6,7 @@
 #    By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 16:29:02 by kibotrel          #+#    #+#              #
-#    Updated: 2019/09/25 15:10:23 by kibotrel         ###   ########.fr        #
+#    Updated: 2019/09/25 15:12:45 by kibotrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ YELLOW		= \033[33m
 all: $(SUBDIRS) ZLIB $(NAME)
 
 ZLIB:
+	@echo "$(GREEN)***   Installing library zlib.a   ***\n$(RESET)"
 	@mkdir -p ZLIB
 	@mkdir -p ZLIB/build
 	@cd ZLIB/build;														\
