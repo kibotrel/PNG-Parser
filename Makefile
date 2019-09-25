@@ -6,7 +6,7 @@
 #    By: kibotrel <kibotrel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 16:29:02 by kibotrel          #+#    #+#              #
-#    Updated: 2019/06/25 23:07:05 by kibotrel         ###   ########.fr        #
+#    Updated: 2019/09/25 15:04:28 by kibotrel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,9 +70,9 @@ all: $(SUBDIRS) ZLIB $(NAME)
 ZLIB:
 	@mkdir -p ZLIB
 	@mkdir -p ZLIB/build
-	@cd ZLIB/build;									\
-	$(ZLIBDIR)configure --prefix $(ABSDIR)/ZLIB;    \
-	make -j; 										\
+	@cd ZLIB/build;														\
+	$(ZLIBDIR)configure --prefix $(ABSDIR)/ZLIB > /dev/null 2>&1;		\
+	make -j; 															\
 	make install
 
 $(NAME): $(OBJDIR) $(COBJ)
