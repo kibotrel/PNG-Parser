@@ -47,10 +47,10 @@ all: $(LFT) $(LPNG)
 # Dependencies of rule all, compile each library.
 
 $(LFT):
-	make -C $(LFTDIR) -j
+	make -C $(LFT_DIR) -j
 
 $(LPNG):
-	make -C $(LPNGDIR) -j
+	make -C $(LPNG_DIR) -j
 
 [...]
 ```
