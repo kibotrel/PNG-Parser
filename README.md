@@ -83,7 +83,7 @@ Quick explanation on each parameter and how they are supposed to be used...
 Parameter | Description | Possible value
 :---: | :---: | :---:
 `path` | file's path that the function will parse | Only paths followed by ".png" could be a correct input depending on the informations stored in its [IHDR Chunk](https://www.w3.org/TR/2003/REC-PNG-20031110/#11IHDR) handled on the current version of the parser.
-`image` | Where informations related to the given PNG would be stored at the end process | Any pointer is a valid value, however be careful, the given structure will be passed through a [bzero()](http://man7.org/linux/man-pages/man3/bzero.3.html) at the beginning of the parsing process no matter what happens after, this pointer will be updated and could be used afterwards in the process ended correctly otherwise it would be a **NULL** pointer.
+`image` | Where information related to the given PNG would be stored at the end process | Any pointer is a valid value, however be careful, the given structure will be passed through a [bzero()](http://man7.org/linux/man-pages/man3/bzero.3.html) at the beginning of the parsing process no matter what happens after, this pointer will be updated and could be used afterwards if the process ended correctly otherwise it would be a **NULL** pointer.
 `flag` | Used to display informations during the parsing process | Two values are handled others are simply ignored and considered as `0` (normal mode). `1` or **VERBOSE** macro available in `macros.h` allow the user to see what is stored in each handled chunks then [uncompressing](https://www.w3.org/TR/2003/REC-PNG-20031110/#10Compression) and [unfiltering](https://www.w3.org/TR/2003/REC-PNG-20031110/#9Filters) processes in [IDAT Chunks](https://www.w3.org/TR/2003/REC-PNG-20031110/#11IDAT). `2` or **DEBUG** macro available in the same file allow the user to get more informations about the file structure. Aside of this it prompts in which chunk and which error was trigger at the exit or `0` if everything went well.
 
 ### Error management
@@ -93,7 +93,7 @@ Each following error is handled by the program leading to a complete memory free
 * Failed to open the given file (*ERROR-CODE 2*)
 * Invalid file signature (*ERROR-CODE 3*)
 * Incorrect IHDR chunk composition (*ERROR-CODE 4*)
-* Invalid iamge dimensions (*ERROR-CODE 5*)
+* Invalid image dimensions (*ERROR-CODE 5*)
 * File size not handled (*ERROR-CODE 6*)
 * Incorrect bit depth (*ERROR-CODE 7*)
 * Incorrect color-type (*ERROR-CODE 8*)
